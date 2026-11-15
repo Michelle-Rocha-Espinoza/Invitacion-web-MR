@@ -7,9 +7,10 @@ Invitación de boda web para Marco y Michelle, en dos versiones para elegir.
 | `index.html` | Portada con las dos opciones. |
 | `carta.html` | **Opción A · Carta animada.** Un sobre con lacre MR que se abre y deja salir once tarjetas con forma (blonda, arco, cartela, escudo, etiqueta, roseta…). Se pasan deslizando, con flechas o con los rombos. |
 | `invitacion.html` | **Opción B · Invitación de scroll.** Una página con sobre de entrada, nicho de mármol, blondas, relieves florales, marcos para fotos, programa, código de vestimenta, regalos y confirmación. |
+| `cancion.mp3` | La canción en versión "sala", que se carga al abrir el sobre. |
 | `design-system/` | Sistema de diseño "Mármol & Blonda": `tokens.json` (colores, tipografías, espacios), `components/bundle.css` y `bundle.js` (estilos y dibujos de blondas, orlas, sobre, relieves) y una guía por componente. |
 
-Cada página es un solo archivo HTML autónomo: incluye sus estilos, scripts y la música. Solo las tipografías se cargan desde Google Fonts.
+Cada página es un solo archivo HTML (unos 100 KB) con sus estilos y scripts. La canción está aparte en `cancion.mp3` y empieza a sonar al tocar el sello. Las tipografías se cargan desde Google Fonts.
 
 ## Ver en línea con GitHub Pages
 

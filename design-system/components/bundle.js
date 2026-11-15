@@ -32,6 +32,48 @@
     return out;
   }
 
+  /* Convierte un SVG dibujado en una imagen (<img>) para que el teléfono lo pinte una sola vez.
+     Resuelve currentColor y var(--x) con los valores reales del contenedor. margen = px extra alrededor (para dibujos que sobresalen). */
+  function aImagen(svg, host, margen) {
+    if (!window.XMLSerializer) { host.insertBefore(svg, host.firstChild); return svg; }
+    var cs = getComputedStyle(host), color = cs.color;
+    var vb = (svg.getAttribute('viewBox') || '0 0 100 100').trim().split(/[\s,]+/).map(Number), m = margen || 0;
+    var w = vb[2] + 2 * m, h = vb[3] + 2 * m;
+    svg.setAttribute('viewBox', (vb[0] - m) + ' ' + (vb[1] - m) + ' ' + w + ' ' + h);
+    svg.setAttribute('xmlns', NS);
+    svg.setAttribute('width', w); svg.setAttribute('height', h);
+    var txt = new XMLSerializer().serializeToString(svg)
+      .replace(/currentColor/g, color)
+      .replace(/var\((--[\w-]+)\)/g, function (_, v) { return cs.getPropertyValue(v).trim() || '#000'; });
+    var img = new Image();
+    img.className = svg.getAttribute('class') || '';
+    img.alt = ''; img.setAttribute('aria-hidden', 'true'); img.decoding = 'async'; img.draggable = false;
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(txt);
+    if (m) img.style.cssText = 'position:absolute;left:-' + m + 'px;top:-' + m + 'px;width:calc(100% + ' + 2 * m + 'px);height:calc(100% + ' + 2 * m + 'px);max-width:none;pointer-events:none;';
+    return img;
+  }
+
+  /* Igual que aImagen, para un SVG que ya está en la página: copia los estilos calculados (clases CSS) y lo reemplaza por la imagen. */
+  var PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-linecap', 'stroke-linejoin', 'opacity', 'filter'];
+  function aImagenEnSitio(svg, margen) {
+    if (!svg || !svg.parentNode || !window.getComputedStyle) return svg;
+    var host = svg.parentNode;
+    Array.prototype.forEach.call(svg.querySelectorAll('*'), function (el) {
+      if (/^(defs|mask|clipPath|filter|fe)/i.test(el.tagName)) return;
+      var cs = getComputedStyle(el), st = '';
+      PROPS.forEach(function (k) { var v = cs.getPropertyValue(k); if (v && v !== 'none' || k === 'fill' || k === 'stroke') st += k + ':' + v + ';'; });
+      el.setAttribute('style', st);
+    });
+    var r = svg.getBoundingClientRect(), box = svg.getAttribute('viewBox');
+    if (!box) return svg;
+    var img = aImagen(svg.cloneNode(true), svg, margen);
+    var cs2 = getComputedStyle(svg);
+    if (!margen) img.style.cssText = 'width:' + r.width + 'px;height:' + r.height + 'px;';
+    ['data-mb'].forEach(function (a) { if (svg.getAttribute(a)) img.setAttribute('data-mb-hecho', svg.getAttribute(a)); });
+    host.replaceChild(img, svg);
+    return img;
+  }
+
   /* Blonda: encaje de papel ovalado y calado. host = .mb-blonda (el texto va en .mb-blonda__texto). */
   /* Igual que anillo(), pero con un número fijo de puntos y un desfase (0–1 de paso) para filas alternadas. */
   function anilloN(a, b, cx, cy, n, fase) {
@@ -123,8 +165,10 @@
     svg.appendChild(nodo('ellipse', { cx: cx, cy: cy, rx: a - 10 * r, ry: b - 10 * r, fill: 'none', style: 'stroke:var(--oro);stroke-width:1.2' }));
     svg.appendChild(nodo('ellipse', { cx: cx, cy: cy, rx: a - 10.6 * r, ry: b - 10.6 * r, fill: 'none', style: 'stroke:var(--oro);stroke-width:.7;stroke-dasharray:1 3;stroke-linecap:round' }));
 
-    host.insertBefore(svg, host.firstChild);
-    return svg;
+    var img = aImagen(svg, host);
+    img.classList && img.classList.add('mb-blonda__img');
+    host.insertBefore(img, host.firstChild);
+    return img;
   }
 
   /* Encaje sobre los bordes de la solapa del sobre */
@@ -425,7 +469,7 @@
     root = root || document;
     cada(root, '.mb-iniciales', centrarIniciales);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { cada(root, '.mb-iniciales', centrarIniciales); });
-    cada(root, '[data-mb="blonda"]', function (el) { if (!el.querySelector(':scope > svg')) blonda(el, { ancho: +el.getAttribute('data-ancho') || 0, alto: +el.getAttribute('data-alto') || 0 }); });
+    cada(root, '[data-mb="blonda"]', function (el) { if (!el.querySelector(':scope > svg, :scope > .mb-blonda__img')) blonda(el, { ancho: +el.getAttribute('data-ancho') || 0, alto: +el.getAttribute('data-alto') || 0 }); });
     cada(root, '[data-mb="sobre"]', sobre);
     cada(root, '[data-mb-cuenta]', function (el) { cuentaRegresiva(el, el.getAttribute('data-mb-cuenta')); });
     cada(root, '[data-mb="orla"]', orla);
@@ -440,5 +484,5 @@
     }
   }
 
-  window.MarmolBlonda = { centrarIniciales: centrarIniciales, blonda: blonda, sobre: sobre, cuentaRegresiva: cuentaRegresiva, orla: orla, floritura: floritura, guirnalda: guirnalda, relieve: relieve, iniciar: iniciar };
+  window.MarmolBlonda = { aImagen: aImagen, aImagenEnSitio: aImagenEnSitio, centrarIniciales: centrarIniciales, blonda: blonda, sobre: sobre, cuentaRegresiva: cuentaRegresiva, orla: orla, floritura: floritura, guirnalda: guirnalda, relieve: relieve, iniciar: iniciar };
 })();
