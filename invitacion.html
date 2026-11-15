@@ -483,6 +483,18 @@ body { background: var(--fondo-alterno) var(--mb-vetas); background-size: 560px;
 .mb-lacre { font-family: var(--font-lettering); letter-spacing: 0; line-height: 1; color: #3a2405; -webkit-text-stroke: .5px currentColor; white-space: nowrap; text-shadow: 0 1px 0 rgba(255,240,200,.6), 0 -1px 0 rgba(60,35,5,.45); }
 .mb-lacre.mb-lacre--grande { font-size: 36px !important; }
 .mb-sobre__carta .script { font-size: 38px; color: var(--acento); }
+.mb-sobre__carta { background: #fbf4f1; padding-top: 30px; }
+.mb-sobre__carta > .relieve { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mb-sobre__carta > p { position: relative; }
+.orla.orla--mini { width: 52px; height: 52px; }
+.mb-sobre__carta .orla--ti { top: 9px; left: 9px; } .mb-sobre__carta .orla--td { top: 9px; right: 9px; }
+.mb-sobre.is-abierto > .mb-sobre__ayuda { opacity: 0; pointer-events: none; transition: opacity .4s; }
+.seguir { appearance: none; border: 0; background: none; cursor: pointer; display: grid; justify-items: center; gap: 2px; margin-top: 18px; color: var(--acento); font: italic 16px/22px var(--font-serif); padding: 8px 14px; opacity: 0; transform: translateY(-6px); transition: opacity .6s 1.8s, transform .6s 1.8s; }
+.seguir.visible { opacity: 1; transform: none; }
+.seguir:focus-visible { outline: 2px solid var(--foco); outline-offset: 3px; }
+.seguir svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; animation: bajar 1.6s ease-in-out infinite; }
+@keyframes bajar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+@media (prefers-reduced-motion: reduce) { .seguir { transition: none; } .seguir svg { animation: none; } }
 
 /* Música / navegación mínima */
 .indice { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; display: flex; gap: 4px 14px; justify-content: center; flex-wrap: wrap; padding: 10px 16px; background: var(--fondo); border-bottom: 1px solid var(--linea); font: 11px/16px var(--font-serif); letter-spacing: .18em; text-transform: uppercase; }
@@ -512,6 +524,9 @@ html { scroll-behavior: smooth; }
     <div class="mb-sobre" data-mb="sobre" style="margin-top:150px">
       <div class="mb-sobre__dorso"></div>
       <div class="mb-sobre__carta">
+        <svg class="relieve" data-relieve="carta" aria-hidden="true"></svg>
+        <svg class="orla orla--mini orla--ti" data-orla aria-hidden="true"></svg>
+        <svg class="orla orla--mini orla--td" data-orla aria-hidden="true"></svg>
         <p class="etiqueta">Están invitados al</p>
         <p class="script">Enlace</p>
         <p class="script" style="font-size:30px;color:var(--burdeos);margin-top:-6px">Riffo Rocha</p>
@@ -522,6 +537,7 @@ html { scroll-behavior: smooth; }
       <button class="mb-lacre mb-lacre--grande" type="button" aria-label="Abrir invitación" style="font-size:40px"><span class="mb-iniciales" aria-hidden="true"><span>M</span><span>R</span></span></button>
       <p class="mb-sobre__ayuda italica" style="font-size:14px">Toca el sello para abrir</p>
     </div>
+    <button class="seguir" type="button" id="seguir" hidden>Ver la invitación<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
   </section>
 
   <nav class="indice" aria-label="Secciones">
@@ -1540,8 +1556,19 @@ html { scroll-behavior: smooth; }
   // Al abrir el sobre, baja a la portada
   var sobre = document.querySelector('[data-mb="sobre"]');
   var lacre = sobre && sobre.querySelector('.mb-lacre');
+  var seguir = document.getElementById('seguir');
+  function irAPortada() { document.getElementById('portada').scrollIntoView({ behavior: 'smooth' }); }
+  if (seguir) seguir.addEventListener('click', irAPortada);
+  var espera = null;
+  function cancelarEspera() { clearTimeout(espera); espera = null; }
+  ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, cancelarEspera, { passive: true }); });
   if (lacre) lacre.addEventListener('click', function () {
-    if (sobre.classList.contains('is-abierto')) setTimeout(function () { document.getElementById('portada').scrollIntoView({ behavior: 'smooth' }); }, 1500);
+    cancelarEspera();
+    if (sobre.classList.contains('is-abierto')) {
+      if (seguir) { seguir.hidden = false; requestAnimationFrame(function () { seguir.classList.add('visible'); }); }
+      // tiempo para leer la carta; si la persona toca o se desplaza, no se baja sola
+      setTimeout(function () { espera = setTimeout(irAPortada, 5500); }, 50);
+    } else if (seguir) { seguir.classList.remove('visible'); seguir.hidden = true; }
   });
 
   // RSVP de demostración
