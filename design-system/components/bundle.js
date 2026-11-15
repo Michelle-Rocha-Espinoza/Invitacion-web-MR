@@ -238,6 +238,9 @@
     hilos.forEach(function (pts) { capa.appendChild(nodo('polyline', { points: pts, fill: 'none', 'class': 'mb-sobre__encaje-filete' })); });
     svg.appendChild(capa);
     solapa.appendChild(svg);
+    // como imagen: el teléfono no recalcula cientos de calados durante el volteo
+    var img = aImagenEnSitio(svg, 40);
+    if (img !== svg) img.classList.add('mb-sobre__encaje');
   }
 
   /* Sobre: abre y cierra con el lacre. host = .mb-sobre */
