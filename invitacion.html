@@ -499,6 +499,8 @@ body { background: var(--fondo-alterno) var(--mb-vetas); background-size: 560px;
 .mb-sobre.is-abierto > .mb-sobre__ayuda { opacity: 0; pointer-events: none; transition: opacity .4s; }
 .seguir { appearance: none; border: 0; background: none; cursor: pointer; display: grid; justify-items: center; gap: 2px; margin-top: 18px; color: var(--acento); font: italic 16px/22px var(--font-serif); padding: 8px 14px; opacity: 0; transform: translateY(-6px); transition: opacity .6s 1.8s, transform .6s 1.8s; }
 .seguir.visible { opacity: 1; transform: none; }
+.invitacion.cerrada > :not(#sobre) { display: none !important; }
+.invitacion.cerrada #sobre { min-height: 100vh; justify-content: center; }
 .acciones-carta { display: grid; justify-items: center; gap: 2px; }
 .cerrar-carta { appearance: none; border: 0; background: none; cursor: pointer; font: 13px/18px var(--font-serif); letter-spacing: .14em; text-transform: uppercase; color: var(--tinta-suave); text-decoration: underline; text-decoration-color: var(--oro); text-underline-offset: 4px; padding: 8px 12px; opacity: 0; transition: opacity .6s 2.2s; }
 .seguir.visible + .cerrar-carta { opacity: 1; }
@@ -535,6 +537,10 @@ body { background: var(--fondo-alterno) var(--mb-vetas); background-size: 560px;
 }
 @media (min-width: 1200px) { .invitacion { zoom: 1.35; } }
 @media (min-width: 1600px) { .invitacion { zoom: 1.5; } }
+/* con la carta cerrada, el sobre ocupa justo la pantalla (descontando el agrandado) */
+@media (min-width: 900px) { .invitacion.cerrada #sobre { min-height: calc((100vh - 96px) / 1.2); } }
+@media (min-width: 1200px) { .invitacion.cerrada #sobre { min-height: calc((100vh - 96px) / 1.35); } }
+@media (min-width: 1600px) { .invitacion.cerrada #sobre { min-height: calc((100vh - 96px) / 1.5); } }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 html { scroll-behavior: smooth; }
@@ -1567,6 +1573,21 @@ html { scroll-behavior: smooth; }
   document.querySelectorAll('[data-floritura]').forEach(floritura);
   MarmolBlonda.iniciar(document);
 
+  var invitacion = document.querySelector('.invitacion');
+  if (invitacion && !location.hash) invitacion.classList.add('cerrada');
+  function revelar() {
+    if (!invitacion.classList.contains('cerrada')) return;
+    invitacion.classList.remove('cerrada');
+    requestAnimationFrame(function () {
+      dibujarMedidos();
+      document.querySelectorAll('.mb-iniciales').forEach(function (el) { MarmolBlonda.centrarIniciales(el); });
+      window.dispatchEvent(new Event('resize'));
+    });
+  }
+  function ocultar() {
+    invitacion.classList.add('cerrada');
+    window.scrollTo(0, 0);
+  }
   function dibujarMedidos() {
     document.querySelectorAll('[data-relieve]').forEach(relieve);
     document.querySelectorAll('[data-guirnalda]').forEach(guirnalda);
@@ -1593,10 +1614,11 @@ html { scroll-behavior: smooth; }
   if (lacre) lacre.addEventListener('click', function () {
     cancelarEspera();
     if (sobre.classList.contains('is-abierto')) {
+      revelar();
       if (acciones) { acciones.hidden = false; requestAnimationFrame(function () { seguir.classList.add('visible'); }); }
       // tiempo para leer la carta; si la persona toca o se desplaza, no se baja sola
       setTimeout(function () { espera = setTimeout(irAPortada, 5500); }, 50);
-    } else if (acciones) { seguir.classList.remove('visible'); acciones.hidden = true; }
+    } else { if (acciones) { seguir.classList.remove('visible'); acciones.hidden = true; } ocultar(); }
   });
   // Cerrar: la carta vuelve al sobre y el sello reaparece
   if (cerrar) cerrar.addEventListener('click', function () {
