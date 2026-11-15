@@ -466,6 +466,9 @@ body { background: var(--fondo-alterno) var(--mb-vetas); background-size: 560px;
 .vestimenta { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; max-width: 360px; }
 .vestimenta > div { padding: 16px 12px; border: 1px solid var(--oro); box-shadow: inset 0 0 0 3px var(--fondo-alterno), inset 0 0 0 4px var(--oro); display: grid; gap: 6px; }
 
+.estilos { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.estilos li { min-width: 108px; padding: 16px 14px 12px; font: 400 30px/1 var(--font-lettering); color: var(--acento); background: var(--fondo); border: 1px solid var(--oro); box-shadow: inset 0 0 0 3px var(--fondo), inset 0 0 0 4px var(--oro); }
+
 /* ---------- Regalos ---------- */
 .sobre-mini { width: 74px; height: 52px; position: relative; background: var(--banda); box-shadow: 0 8px 14px -8px rgba(74,15,28,.6); }
 .sobre-mini::before { content: ""; position: absolute; inset: 0 0 45% 0; background: var(--acento); clip-path: polygon(0 0, 100% 0, 50% 100%); }
@@ -510,10 +513,27 @@ body { background: var(--fondo-alterno) var(--mb-vetas); background-size: 560px;
 .mb-calendario__grilla { font-family: var(--font-maquina); }
 .mb-calendario__dow { font-family: var(--font-serif); font-weight: 400; }
 
+/* ---------- Escritorio: la invitación crece y la mesa se decora ---------- */
+.adorno-mesa { display: none; }
+@media (min-width: 900px) {
+  .adorno-mesa { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .5; }
+  .adorno-mesa .orla { width: 240px; height: 240px; }
+  .adorno-mesa .orla--ti { top: 24px; left: 24px; } .adorno-mesa .orla--td { top: 24px; right: 24px; }
+  .adorno-mesa .orla--bi { bottom: 24px; left: 24px; } .adorno-mesa .orla--bd { bottom: 24px; right: 24px; }
+  .mesa { position: relative; z-index: 1; padding-block: 48px; }
+  .invitacion { zoom: 1.2; box-shadow: 0 40px 80px -30px rgba(74, 15, 28, .5), 0 0 0 1px rgba(168, 130, 60, .35); }
+}
+@media (min-width: 1200px) { .invitacion { zoom: 1.35; } }
+@media (min-width: 1600px) { .invitacion { zoom: 1.5; } }
+
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 html { scroll-behavior: smooth; }
 </style>
 
+<div class="adorno-mesa" aria-hidden="true">
+  <svg class="orla orla--ti" data-orla></svg><svg class="orla orla--td" data-orla></svg>
+  <svg class="orla orla--bi" data-orla></svg><svg class="orla orla--bd" data-orla></svg>
+</div>
 <div class="mesa">
 <main class="invitacion">
 
@@ -734,19 +754,12 @@ html { scroll-behavior: smooth; }
     <svg class="orla orla--bd" data-orla aria-hidden="true"></svg>
     <p class="etiqueta">Código de vestimenta</p>
     <h2 class="titulo-sec">Etiqueta</h2>
-    <p class="caps" style="font-size:15px;color:var(--tinta-suave)">De gala · Black tie opcional</p>
-    <div class="vestimenta">
-      <div><p class="caps" style="font-size:13px">Ellas</p><p class="texto-sm">Vestido largo, o de cóctel muy elegante.</p></div>
-      <div><p class="caps" style="font-size:13px">Ellos</p><p class="texto-sm">Smoking, o traje oscuro con corbata.</p></div>
-    </div>
-    <p class="italica">Una paleta sugerida:</p>
-    <div class="mb-paleta">
-      <div class="mb-paleta__muestra" style="font-family:var(--font-serif);font-weight:400"><span class="mb-paleta__disco" style="background:var(--vino)"></span>Vino</div>
-      <div class="mb-paleta__muestra" style="font-family:var(--font-serif);font-weight:400"><span class="mb-paleta__disco" style="background:var(--burdeos)"></span>Burdeos</div>
-      <div class="mb-paleta__muestra" style="font-family:var(--font-serif);font-weight:400"><span class="mb-paleta__disco" style="background:var(--malva)"></span>Malva</div>
-      <div class="mb-paleta__muestra" style="font-family:var(--font-serif);font-weight:400"><span class="mb-paleta__disco" style="background:var(--rubor)"></span>Rubor</div>
-      <div class="mb-paleta__muestra" style="font-family:var(--font-serif);font-weight:400"><span class="mb-paleta__disco" style="background:var(--oro)"></span>Oro</div>
-    </div>
+    <p class="italica">Pueden venir en cualquiera de estos estilos:</p>
+    <ul class="estilos">
+      <li>De gala</li>
+      <li>Formal</li>
+      <li>Fiesta</li>
+    </ul>
     <p class="texto-sm mb-suave">El blanco y el marfil quedan reservados para la novia.</p>
   </section>
 

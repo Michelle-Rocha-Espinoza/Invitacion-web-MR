@@ -349,6 +349,8 @@ body { margin: 0; color: var(--tinta); font-family: var(--font-maquina); overflo
 .mazo .tarjeta { left: 50%; top: 50%; transition: transform .55s cubic-bezier(.2, .8, .2, 1); cursor: grab; }
 .mazo .tarjeta.sin-trans { transition: none; }
 .mazo .tarjeta.arrastrando { transition: none; cursor: grabbing; }
+.mazo .tarjeta .tarjeta__contenido, .mazo .tarjeta .mb-blonda__texto { transition: opacity .35s; }
+.mazo .tarjeta[aria-hidden="true"] .tarjeta__contenido, .mazo .tarjeta[aria-hidden="true"] .mb-blonda__texto { opacity: 0; }
 .tarjeta > .forma { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .tarjeta__contenido { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 48px 38px; }
 .tarjeta[data-tono="vino"] { color: var(--en-banda); }
@@ -400,6 +402,8 @@ body { margin: 0; color: var(--tinta); font-family: var(--font-maquina); overflo
 .tarjeta .mb-orla--ti { top: 14px; left: 14px; } .tarjeta .mb-orla--td { top: 14px; right: 14px; }
 .tarjeta .mb-orla--bi { bottom: 14px; left: 14px; } .tarjeta .mb-orla--bd { bottom: 14px; right: 14px; }
 .tarjeta[data-tono="vino"] .mb-orla { color: var(--oro); }
+.estilos-t { list-style: none; margin: 2px 0; padding: 0; display: grid; gap: 6px; justify-items: center; }
+.estilos-t li { min-width: 150px; padding: 8px 14px 5px; font: 400 26px/1 var(--font-lettering); color: var(--acento); border: 1px solid var(--oro); box-shadow: inset 0 0 0 3px #fbf4f1, inset 0 0 0 4px var(--oro); }
 .mini-paleta { display: flex; gap: 8px; justify-content: center; }
 .mini-paleta span { width: 22px; height: 22px; border-radius: 50%; box-shadow: 0 0 0 2px var(--fondo), 0 0 0 3px var(--oro); }
 .prog { list-style: none; margin: 4px 0; padding: 0; display: grid; gap: 6px; }
@@ -435,11 +439,34 @@ body { margin: 0; color: var(--tinta); font-family: var(--font-maquina); overflo
 .otra-vez:focus-visible { outline: 2px solid var(--foco); outline-offset: 2px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
+/* ---------- Escritorio ---------- */
+.adorno-mesa { display: none; }
+@media (min-width: 900px) {
+  .adorno-mesa { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .55; }
+  .adorno-mesa .mb-orla { width: 230px; height: 230px; }
+  .adorno-mesa .mb-orla--ti { top: 24px; left: 24px; } .adorno-mesa .mb-orla--td { top: 24px; right: 24px; }
+  .adorno-mesa .mb-orla--bi { bottom: 24px; left: 24px; } .adorno-mesa .mb-orla--bd { bottom: 24px; right: 24px; }
+  .mesa { position: relative; z-index: 1; }
+}
+body.escritorio .encabezado__titulo { font-size: 44px; }
+body.escritorio .encabezado__sub { font-size: 17px; }
+body.escritorio .escena { height: calc((var(--ch) + 64px) * var(--z, 1)); max-width: none; }
+body.escritorio .mazo { scale: var(--z, 1); }
+body.escritorio .escena .mb-sobre { scale: var(--z, 1); }
+body.escritorio .controles { position: absolute; inset: 0; margin: 0; z-index: 40; display: flex; align-items: center; justify-content: center; gap: calc(var(--cw) * var(--z, 1) + 110px); pointer-events: none; }
+body.escritorio .controles .ctrl { pointer-events: auto; width: 54px; height: 54px; flex: none; }
+body.escritorio .contador { position: absolute; left: 50%; bottom: -48px; translate: -50% 0; }
+body.escritorio .puntos { margin-top: 58px; }
+
 @media (prefers-reduced-motion: reduce) {
   .escena .mb-sobre, .mb-sobre .interior, .mazo .tarjeta { transition: none !important; }
 }
 </style>
 
+<div class="adorno-mesa" aria-hidden="true">
+  <svg class="mb-orla mb-orla--ti" data-mb="orla"></svg><svg class="mb-orla mb-orla--td" data-mb="orla"></svg>
+  <svg class="mb-orla mb-orla--bi" data-mb="orla"></svg><svg class="mb-orla mb-orla--bd" data-mb="orla"></svg>
+</div>
 <div class="mesa">
   <header class="encabezado" id="encabezado">
     <p class="encabezado__titulo">Tienes una invitación</p>
@@ -568,9 +595,13 @@ body { margin: 0; color: var(--tinta); font-family: var(--font-maquina); overflo
     <div class="tarjeta__contenido">
       <p class="t-caps">Código de vestimenta</p>
       <p class="t-script">Etiqueta</p>
-      <p class="t-caps" style="color:var(--en-encaje)">De gala · Black tie opcional</p>
-      <p class="t-texto"><b>Ellas:</b> vestido largo o de cóctel muy elegante.<br><b>Ellos:</b> smoking o traje oscuro con corbata.</p>
-      <div class="mini-paleta" aria-label="Paleta sugerida: vino, burdeos, malva, rubor y oro"><span style="background:var(--vino)"></span><span style="background:var(--burdeos)"></span><span style="background:var(--malva)"></span><span style="background:var(--rubor)"></span><span style="background:var(--oro)"></span></div>
+      <svg class="mb-floritura" data-mb="floritura" aria-hidden="true"></svg>
+      <p class="t-italica" style="font-size:15px">Pueden venir en cualquiera de estos estilos:</p>
+      <ul class="estilos-t">
+        <li>De gala</li>
+        <li>Formal</li>
+        <li>Fiesta</li>
+      </ul>
       <p class="t-texto" style="font-size:11px">El blanco y el marfil, solo para la novia.</p>
     </div>
   </article>
@@ -1320,7 +1351,8 @@ body { margin: 0; color: var(--tinta); font-family: var(--font-maquina); overflo
     var total = tarjetas.length;
     tarjetas.forEach(function (t, i) {
       var r0 = ultimos[i], r1 = t.getBoundingClientRect();
-      var dx = (r0.left + r0.width / 2) - (r1.left + r1.width / 2), dy = (r0.top + r0.height / 2) - (r1.top + r1.height / 2);
+      var z = zoomEscena();
+      var dx = ((r0.left + r0.width / 2) - (r1.left + r1.width / 2)) / z, dy = ((r0.top + r0.height / 2) - (r1.top + r1.height / 2)) / z;
       var sc = r0.width / r1.width, fin = t.style.transform;
       var orden_salida = total - 1 - i; // las de abajo salen primero y la portada cae al final
       if (!reducido && t.animate) {
@@ -1350,7 +1382,7 @@ body { margin: 0; color: var(--tinta); font-family: var(--font-maquina); overflo
     sub.textContent = 'Sacando las tarjetas…';
     setTimeout(function () {
       sacarTarjetas();
-      sub.textContent = 'Desliza para avanzar o volver';
+      sub.textContent = document.body.classList.contains('escritorio') ? 'Usa las flechas, el teclado o arrastra la tarjeta' : 'Desliza para avanzar o volver';
     }, reducido ? 50 : 1500);
   }
   // el sobre (MarmolBlonda.sobre) cambia is-abierto; aquí solo se sacan las tarjetas
@@ -1395,7 +1427,7 @@ body { margin: 0; color: var(--tinta); font-family: var(--font-maquina); overflo
   });
   mazo.addEventListener('pointermove', function (e) {
     if (!arr) return;
-    var dx = e.clientX - arr.x, dy = (e.clientY - arr.y) * .3;
+    var z = zoomEscena(), dx = (e.clientX - arr.x) / z, dy = (e.clientY - arr.y) * .3 / z;
     arr.dx = dx;
     arr.t.style.transform = 'translate(-50%, -50%) translate(' + dx + 'px,' + dy + 'px) rotate(' + (dx / 18) + 'deg)';
   });
@@ -1440,6 +1472,29 @@ body { margin: 0; color: var(--tinta); font-family: var(--font-maquina); overflo
 
   // Días que faltan
   var dias = Math.max(0, Math.ceil((new Date('2027-03-20T17:00:00-03:00') - Date.now()) / 86400000));
+
+  // Escritorio: mazo más grande según la altura y flechas a los costados
+  function zoomEscena() {
+    if (!document.body.classList.contains('escritorio')) return 1;
+    var v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--z'));
+    return v > 0 ? v : 1;
+  }
+  var controlesOrigen = controles.parentNode, controlesSig = controles.nextSibling;
+  function ajustarEscritorio() {
+    var ancho = window.innerWidth >= 900;
+    document.body.classList.toggle('escritorio', ancho);
+    if (ancho) {
+      if (controles.parentNode !== escena) escena.appendChild(controles);
+      var ch = tarjetas[0].offsetHeight || 455;
+      var z = Math.max(1, Math.min(1.6, (window.innerHeight - 190) / (ch + 64), (window.innerWidth - 120) / ((tarjetas[0].offsetWidth || 330) + 300)));
+      document.documentElement.style.setProperty('--z', z.toFixed(3));
+    } else {
+      if (controles.parentNode !== controlesOrigen) controlesOrigen.insertBefore(controles, controlesSig);
+      document.documentElement.style.removeProperty('--z');
+    }
+  }
+  ajustarEscritorio();
+  window.addEventListener('resize', ajustarEscritorio);
 
   // Montaje
   meterEnSobre();
