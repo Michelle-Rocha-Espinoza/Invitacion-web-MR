@@ -82,7 +82,7 @@
 .mb-sobre__solapa { position: absolute; left: 0; right: 0; top: 0; height: 58%; z-index: 3; transform-origin: top; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.5, 0, .2, 1), z-index 0s .35s; }
 .mb-sobre__solapa::before, .mb-sobre__solapa::after { content: ""; position: absolute; inset: 0; clip-path: polygon(0 0, 100% 0, 50% 100%); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 .mb-sobre__solapa::before { background: var(--acento); }
-.mb-sobre__solapa::after { background: var(--mb-vetas), var(--mb-nubes), var(--perla); transform: rotateX(180deg); }
+.mb-sobre__solapa::after { background: var(--mb-vetas), var(--mb-nubes), var(--perla); transform: rotateX(180deg); clip-path: polygon(0 100%, 100% 100%, 50% 0); box-shadow: inset 0 -1px 0 var(--oro); }
 .mb-sobre > .mb-lacre { position: absolute; left: 50%; top: 58%; z-index: 4; translate: -50% -50%; }
 .mb-sobre.is-abierto .mb-sobre__solapa { transform: rotateX(180deg); z-index: 0; }
 .mb-sobre.is-abierto .mb-sobre__carta { transform: translateY(-52%); }

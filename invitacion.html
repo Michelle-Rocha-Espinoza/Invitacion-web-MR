@@ -106,7 +106,7 @@
 .mb-sobre__solapa { position: absolute; left: 0; right: 0; top: 0; height: 58%; z-index: 3; transform-origin: top; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.5, 0, .2, 1), z-index 0s .35s; }
 .mb-sobre__solapa::before, .mb-sobre__solapa::after { content: ""; position: absolute; inset: 0; clip-path: polygon(0 0, 100% 0, 50% 100%); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 .mb-sobre__solapa::before { background: var(--acento); }
-.mb-sobre__solapa::after { background: var(--mb-vetas), var(--mb-nubes), var(--perla); transform: rotateX(180deg); }
+.mb-sobre__solapa::after { background: var(--mb-vetas), var(--mb-nubes), var(--perla); transform: rotateX(180deg); clip-path: polygon(0 100%, 100% 100%, 50% 0); box-shadow: inset 0 -1px 0 var(--oro); }
 .mb-sobre > .mb-lacre { position: absolute; left: 50%; top: 58%; z-index: 4; translate: -50% -50%; }
 .mb-sobre.is-abierto .mb-sobre__solapa { transform: rotateX(180deg); z-index: 0; }
 .mb-sobre.is-abierto .mb-sobre__carta { transform: translateY(-52%); }
@@ -486,7 +486,12 @@ body { background: var(--fondo-alterno) var(--mb-vetas); background-size: 560px;
 .mb-lacre { font-family: var(--font-lettering); letter-spacing: 0; line-height: 1; color: #3a2405; -webkit-text-stroke: .5px currentColor; white-space: nowrap; text-shadow: 0 1px 0 rgba(255,240,200,.6), 0 -1px 0 rgba(60,35,5,.45); }
 .mb-lacre.mb-lacre--grande { font-size: 36px !important; }
 .mb-sobre__carta .script { font-size: 38px; color: var(--acento); }
-.mb-sobre__carta { background: #fbf4f1; padding-top: 30px; }
+.mb-sobre__carta { background: #fbf4f1; padding: 54px 48px 24px; gap: 2px; }
+/* el texto queda dentro del marco de relieve, sin tocar rosas ni orlas */
+.mb-sobre__carta .etiqueta { font-size: 10px; letter-spacing: .2em; line-height: 14px; margin-bottom: 9px; }
+.mb-sobre__carta .script { font-size: 34px; line-height: 1.05; }
+.mb-sobre__carta .script + .script { font-size: 27px !important; margin-top: -2px !important; }
+.mb-sobre__carta .dato { font-size: 13px !important; margin-top: 4px; }
 .mb-sobre__carta > .relieve { position: absolute; inset: 0; width: 100%; height: 100%; }
 .mb-sobre__carta > p { position: relative; }
 .orla.orla--mini { width: 52px; height: 52px; }
@@ -494,6 +499,11 @@ body { background: var(--fondo-alterno) var(--mb-vetas); background-size: 560px;
 .mb-sobre.is-abierto > .mb-sobre__ayuda { opacity: 0; pointer-events: none; transition: opacity .4s; }
 .seguir { appearance: none; border: 0; background: none; cursor: pointer; display: grid; justify-items: center; gap: 2px; margin-top: 18px; color: var(--acento); font: italic 16px/22px var(--font-serif); padding: 8px 14px; opacity: 0; transform: translateY(-6px); transition: opacity .6s 1.8s, transform .6s 1.8s; }
 .seguir.visible { opacity: 1; transform: none; }
+.acciones-carta { display: grid; justify-items: center; gap: 2px; }
+.cerrar-carta { appearance: none; border: 0; background: none; cursor: pointer; font: 13px/18px var(--font-serif); letter-spacing: .14em; text-transform: uppercase; color: var(--tinta-suave); text-decoration: underline; text-decoration-color: var(--oro); text-underline-offset: 4px; padding: 8px 12px; opacity: 0; transition: opacity .6s 2.2s; }
+.seguir.visible + .cerrar-carta { opacity: 1; }
+.cerrar-carta:hover { color: var(--acento); }
+.cerrar-carta:focus-visible { outline: 2px solid var(--foco); outline-offset: 3px; }
 .seguir:focus-visible { outline: 2px solid var(--foco); outline-offset: 3px; }
 .seguir svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; animation: bajar 1.6s ease-in-out infinite; }
 @keyframes bajar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
@@ -557,7 +567,10 @@ html { scroll-behavior: smooth; }
       <button class="mb-lacre mb-lacre--grande" type="button" aria-label="Abrir invitación" style="font-size:40px"><span class="mb-iniciales" aria-hidden="true"><span>M</span><span>R</span></span></button>
       <p class="mb-sobre__ayuda italica" style="font-size:14px">Toca el sello para abrir</p>
     </div>
-    <button class="seguir" type="button" id="seguir" hidden>Ver la invitación<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="acciones-carta" id="acciones-carta" hidden>
+      <button class="seguir" type="button" id="seguir">Ver la invitación<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <button class="cerrar-carta" type="button" id="cerrar-carta">Guardar la carta en el sobre</button>
+    </div>
   </section>
 
   <nav class="indice" aria-label="Secciones">
@@ -1570,6 +1583,8 @@ html { scroll-behavior: smooth; }
   var sobre = document.querySelector('[data-mb="sobre"]');
   var lacre = sobre && sobre.querySelector('.mb-lacre');
   var seguir = document.getElementById('seguir');
+  var acciones = document.getElementById('acciones-carta');
+  var cerrar = document.getElementById('cerrar-carta');
   function irAPortada() { document.getElementById('portada').scrollIntoView({ behavior: 'smooth' }); }
   if (seguir) seguir.addEventListener('click', irAPortada);
   var espera = null;
@@ -1578,10 +1593,16 @@ html { scroll-behavior: smooth; }
   if (lacre) lacre.addEventListener('click', function () {
     cancelarEspera();
     if (sobre.classList.contains('is-abierto')) {
-      if (seguir) { seguir.hidden = false; requestAnimationFrame(function () { seguir.classList.add('visible'); }); }
+      if (acciones) { acciones.hidden = false; requestAnimationFrame(function () { seguir.classList.add('visible'); }); }
       // tiempo para leer la carta; si la persona toca o se desplaza, no se baja sola
       setTimeout(function () { espera = setTimeout(irAPortada, 5500); }, 50);
-    } else if (seguir) { seguir.classList.remove('visible'); seguir.hidden = true; }
+    } else if (acciones) { seguir.classList.remove('visible'); acciones.hidden = true; }
+  });
+  // Cerrar: la carta vuelve al sobre y el sello reaparece
+  if (cerrar) cerrar.addEventListener('click', function () {
+    cancelarEspera();
+    if (sobre.classList.contains('is-abierto')) lacre.click();
+    lacre.focus({ preventScroll: true });
   });
 
   // RSVP de demostración
