@@ -29,9 +29,9 @@
 :root {
   /* Lámina dorada (foil): se usa en lacre dorado, monogramas, números, filetes dobles */
   --mb-foil: linear-gradient(115deg, var(--oro-profundo) 0%, var(--oro) 20%, var(--oro-claro) 40%, var(--oro) 56%, var(--oro-claro) 72%, var(--oro-profundo) 100%);
-  /* Vetas de mármol (rubor translúcido) + nubes suaves: funcionan sobre marfil y sobre vino */
-  --mb-vetas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='560'%3E%3Cfilter id='v' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.004 0.011' numOctaves='5' seed='17' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.62 0 0 0 0 0.36 0 0 0 0 0.38 -7 0 0 0 0.9'/%3E%3C/filter%3E%3Crect width='560' height='560' filter='url(%23v)' opacity='0.55'/%3E%3C/svg%3E");
-  --mb-nubes: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='560'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.85 0 0 0 0 0.62 0 0 0 0 0.62 0 0 0 0.9 -0.35'/%3E%3C/filter%3E%3Crect width='560' height='560' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  /* Vetas de mármol (rubor translúcido) + nubes suaves, ya pintadas como imagen WebP para que el scroll sea fluido */
+  --mb-vetas: url("vetas.webp");
+  --mb-nubes: url("nubes.webp");
 }
 
 [class^="mb-"], [class*=" mb-"], [class^="mb-"]::before, [class*=" mb-"]::before, [class^="mb-"]::after, [class*=" mb-"]::after { box-sizing: border-box; }
@@ -131,7 +131,7 @@
 .mb-sobre > .mb-lacre { z-index: 5; }
 
 /* ---------- Blonda (encaje calado) ---------- */
-.mb-blonda { position: relative; width: min(100%, 300px); aspect-ratio: 4 / 5; color: var(--encaje); filter: drop-shadow(0 1px 1px var(--sombra-texto)) drop-shadow(0 16px 22px var(--sombra-texto)); }
+.mb-blonda { position: relative; width: min(100%, 300px); aspect-ratio: 4 / 5; color: var(--encaje); filter: drop-shadow(0 10px 14px var(--sombra-texto)); }
 .mb-blonda > svg, .mb-blonda > .mb-blonda__img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; pointer-events: none; }
 .mb-blonda__texto { position: absolute; inset: 22% 24%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; color: var(--en-encaje); }
 
@@ -145,7 +145,7 @@
 .mb-troquel--fino { --r: var(--troquel-fino); }
 .mb-troquel--banda { background: var(--banda); color: var(--en-banda); }
 .mb-troquel--banda .mb-titulo { color: var(--en-banda); }
-.mb-sombra-papel { filter: drop-shadow(0 1px 1px var(--sombra-texto)) drop-shadow(0 14px 20px var(--sombra-texto)); }
+.mb-sombra-papel { filter: drop-shadow(0 10px 14px var(--sombra-texto)); }
 
 /* ---------- Mármol ---------- */
 .mb-marmol { background-color: var(--fondo); background-image: var(--mb-vetas), var(--mb-nubes); background-size: 560px 560px, 560px 560px; }
@@ -437,10 +437,10 @@ body { background: var(--fondo-alterno) var(--mb-vetas); background-size: 560px;
 .relieve { overflow: visible; pointer-events: none; }
 .relieve .rv { fill: #fbf4f1; stroke: rgba(74,15,28,.16); stroke-width: .7; }
 .relieve .rv-tallo { fill: none; stroke: #fbf4f1; stroke-width: 2.4; stroke-linecap: round; }
-.relieve g.capa { filter: drop-shadow(-1px -1px 0 rgba(255,255,255,1)) drop-shadow(1.2px 1.6px 1px rgba(74,15,28,.32)); }
+.relieve g.capa { filter: drop-shadow(1px 1.4px 0 rgba(74,15,28,.28)); }
 .relieve--oscuro .rv { fill: var(--banda); stroke: rgba(0,0,0,.25); }
 .relieve--oscuro .rv-tallo { stroke: var(--banda); }
-.relieve--oscuro g.capa { filter: drop-shadow(-1px -1px 0 rgba(255,190,190,.22)) drop-shadow(1.2px 1.6px 1px rgba(0,0,0,.55)); }
+.relieve--oscuro g.capa { filter: drop-shadow(1px 1.4px 0 rgba(0,0,0,.5)); }
 .mb-sobre__bolsillo > .relieve { position: absolute; inset: 0; width: 100%; height: 100%; }
 
 /* Citas bíblicas */
