@@ -1,0 +1,50 @@
+<!-- @dsCard height=320 -->
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8">
+<style>
+  html, body { margin: 0; background: var(--fondo); }
+  .portada { position: relative; width: 960px; height: 320px; overflow: hidden; background: var(--fondo); }
+  .portada svg { position: absolute; inset: 0; }
+  .acento { fill: var(--acento); }
+  .rubor { fill: var(--rubor); }
+  .oro { fill: var(--oro); }
+  .banda { fill: var(--banda); }
+  .hueco { fill: var(--fondo); }
+  .filete { fill: none; stroke: var(--oro); stroke-width: 1; }
+  .texto { position: absolute; left: 48px; bottom: 40px; max-width: 440px; }
+  .nombre { margin: 0; font-family: var(--font-lettering); font-weight: 400; font-size: 96px; line-height: .95; color: var(--tinta); }
+  .lema { margin: 16px 0 0; font-family: var(--font-maquina); font-size: 13px; line-height: 18px; color: var(--tinta-suave); }
+</style>
+</head>
+<body>
+<div class="portada">
+  <svg width="960" height="320" viewBox="0 0 960 320" aria-hidden="true">
+    <!--
+      bloques: acento 352×208 (losa que sangra arriba/derecha), rubor 88×160, oro arco 88×136 (radio 44 = mitad), banda 224×72 (sangra abajo/derecha)
+      disposición: una losa alta con satélites, a la derecha de x=480; el nombre abajo a la izquierda sobre el fondo
+      patrón: motivo literal (festón de troquel + ojales de blonda) — el borde ondeado y el calado son lo que distingue esta papelería
+      escalas: festón r=16 a paso 32 (espacio-6/2), ojales r=4 (espacio-1), separación 24 (espacio-4), radio-pildora en el arco
+    -->
+    <rect class="rubor" x="496" y="0" width="88" height="160"/>
+    <path class="oro" d="M496 320 V228 A44 44 0 0 1 584 228 V320 Z"/>
+    <rect class="acento" x="608" y="0" width="352" height="208"/>
+    <g class="acento">
+      <circle cx="624" cy="208" r="16"/><circle cx="656" cy="208" r="16"/><circle cx="688" cy="208" r="16"/><circle cx="720" cy="208" r="16"/>
+      <circle cx="752" cy="208" r="16"/><circle cx="784" cy="208" r="16"/><circle cx="816" cy="208" r="16"/><circle cx="848" cy="208" r="16"/>
+      <circle cx="880" cy="208" r="16"/><circle cx="912" cy="208" r="16"/><circle cx="944" cy="208" r="16"/>
+    </g>
+    <g class="hueco">
+      <circle cx="640" cy="184" r="4"/><circle cx="672" cy="184" r="4"/><circle cx="704" cy="184" r="4"/><circle cx="736" cy="184" r="4"/><circle cx="768" cy="184" r="4"/>
+      <circle cx="800" cy="184" r="4"/><circle cx="832" cy="184" r="4"/><circle cx="864" cy="184" r="4"/><circle cx="896" cy="184" r="4"/><circle cx="928" cy="184" r="4"/>
+    </g>
+    <rect class="banda" x="736" y="256" width="224" height="64"/>
+    <line class="filete" x1="608" y1="248" x2="720" y2="248"/>
+  </svg>
+  <div class="texto">
+    <p class="nombre">Mármol &amp;<br>Blonda</p>
+    <p class="lema">Papelería de boda para la web: vino, rubor, mármol y oro.</p>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!-- @dsCard group="Secciones" height=660 subtitle="Formulario RSVP en tarjeta troquelada" -->
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><style>html,body{margin:0;min-height:100%;background:var(--fondo)}</style></head>
+<body>
+<div class="mb-escena mb-marmol">
+  <div class="mb-sombra-papel" style="width:min(100%,360px)">
+    <div class="mb-troquel" style="width:100%">
+      <h2 class="mb-titulo" style="font-size:44px">Confirmación</h2>
+      <p class="mb-nota mb-suave">Por favor responde antes del 20 de febrero de 2027</p>
+      <form class="mb-form" id="rsvp">
+        <div class="mb-campo">
+          <label for="rsvp-nombre">Nombre y apellido</label>
+          <input class="mb-input" id="rsvp-nombre" type="text" placeholder="Como aparece en tu invitación" autocomplete="name">
+        </div>
+        <fieldset class="mb-campo">
+          <legend>¿Nos acompañas?</legend>
+          <div class="mb-opciones">
+            <label class="mb-opcion"><input type="radio" name="asiste" id="asiste-si" checked><span>Sí, asistiré</span></label>
+            <label class="mb-opcion"><input type="radio" name="asiste" id="asiste-no"><span>No podré</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="mb-campo">
+          <legend>Personas</legend>
+          <div class="mb-opciones">
+            <label class="mb-opcion"><input type="radio" name="personas" id="personas-1"><span>1</span></label>
+            <label class="mb-opcion"><input type="radio" name="personas" id="personas-2" checked><span>2</span></label>
+            <label class="mb-opcion"><input type="radio" name="personas" id="personas-3"><span>3</span></label>
+          </div>
+        </fieldset>
+        <div class="mb-campo">
+          <label for="rsvp-nota">Restricción alimentaria</label>
+          <input class="mb-input" id="rsvp-nota" type="text" placeholder="Opcional">
+        </div>
+        <button class="mb-boton" type="submit" style="align-self:center">Enviar confirmación</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script>document.getElementById('rsvp').addEventListener('submit', function (e) { e.preventDefault(); });</script>
+</body>
+</html>

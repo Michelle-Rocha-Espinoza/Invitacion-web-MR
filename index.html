@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4a0f1c">
+<meta name="description" content="Dos versiones de la invitación al Enlace Riffo Rocha para elegir.">
+<title>Enlace Riffo Rocha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+French+Canon:ital@0;1&family=Monsieur+La+Doulaise&family=Special+Elite&display=swap">
+<style>
+/* Portada de opciones: dos tarjetas de papel sobre mármol rosado */
+:root {
+  color-scheme: light;
+  --vino: #4a0f1c; --burdeos: #7a1a2e; --rubor: #e8b9b8; --perla: #f9dedd;
+  --oro: #a8823c; --oro-claro: #e8cd86; --oro-profundo: #7d5a1e;
+  --fondo: #f7e4e1; --papel: #fbf4f1; --tinta: #3a0b15; --tinta-suave: #7a4a50;
+  --script: "Monsieur La Doulaise", "Pinyon Script", cursive;
+  --serif: "IM Fell French Canon", "Cormorant Garamond", Georgia, serif;
+  --maquina: "Special Elite", "Courier Prime", monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; color: var(--tinta); font-family: var(--maquina);
+  background: radial-gradient(ellipse at 50% 30%, transparent 40%, rgba(74, 15, 28, .14) 100%),
+    repeating-linear-gradient(90deg, rgba(122, 26, 46, .025) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(0deg, rgba(122, 26, 46, .03) 0 1px, transparent 1px 3px), var(--fondo); }
+main { max-width: 760px; margin: 0 auto; padding-block: 56px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; justify-items: center; text-align: center; }
+.antetitulo { font: 13px/18px var(--serif); letter-spacing: .3em; text-transform: uppercase; color: var(--tinta-suave); margin: 0; }
+h1 { font: 400 clamp(54px, 13vw, 84px)/1 var(--script); color: var(--burdeos); margin: 0; text-wrap: balance; }
+h1 span { display: block; color: var(--oro-profundo); font-size: .8em; margin-bottom: .05em; }
+.bajada { font: italic 18px/27px var(--serif); color: var(--tinta-suave); margin: 0; max-width: 34ch; }
+.opciones { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; width: 100%; }
+.opcion { position: relative; display: grid; gap: 12px; justify-items: center; padding: 36px 28px 30px; background: var(--papel); color: var(--tinta); text-decoration: none;
+  box-shadow: inset 0 0 0 10px var(--papel), inset 0 0 0 11px var(--oro), inset 0 0 0 15px var(--papel), inset 0 0 0 16px rgba(168, 130, 60, .5), 0 18px 34px -18px rgba(74, 15, 28, .45);
+  transition: transform .3s, box-shadow .3s; }
+.opcion:hover { transform: translateY(-4px); box-shadow: inset 0 0 0 10px var(--papel), inset 0 0 0 11px var(--oro), inset 0 0 0 15px var(--papel), inset 0 0 0 16px rgba(168, 130, 60, .5), 0 26px 40px -18px rgba(74, 15, 28, .55); }
+.opcion:focus-visible { outline: 2px solid var(--burdeos); outline-offset: 4px; }
+.opcion__letra { font: 12px/16px var(--serif); letter-spacing: .3em; text-transform: uppercase; color: var(--oro-profundo); }
+.opcion__nombre { font: 400 40px/1.1 var(--script); color: var(--burdeos); margin: 0; }
+.opcion__texto { font: 14px/22px var(--maquina); margin: 0; max-width: 30ch; }
+.opcion__ir { margin-top: 6px; font: 12px/16px var(--maquina); letter-spacing: .2em; text-transform: uppercase; color: var(--perla); background: var(--burdeos); padding: 12px 22px; border-radius: 999px; }
+.opcion:hover .opcion__ir { background: var(--vino); }
+
+/* Íconos dibujados con CSS */
+.icono { width: 92px; height: 66px; position: relative; margin-bottom: 4px; }
+.icono--sobre { background: var(--vino); box-shadow: inset 0 0 0 1px var(--oro); }
+.icono--sobre::before { content: ""; position: absolute; inset: 0 0 42% 0; background: var(--burdeos); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.icono--sobre::after { content: ""; position: absolute; left: 50%; top: 58%; width: 22px; height: 22px; translate: -50% -50%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, var(--oro-claro), var(--oro) 50%, var(--oro-profundo)); box-shadow: 0 2px 4px rgba(40, 6, 14, .5); }
+.icono--pagina { width: 58px; height: 80px; background: var(--perla); box-shadow: inset 0 0 0 1px var(--oro), 0 6px 10px -6px rgba(74, 15, 28, .5); border-radius: 29px 29px 0 0; }
+.icono--pagina::before { content: ""; position: absolute; left: 12px; right: 12px; top: 14px; height: 30px; border-radius: 50%; border: 1px solid var(--oro); }
+.icono--pagina::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 12px; height: 18px; background: repeating-linear-gradient(var(--rubor) 0 2px, transparent 2px 6px); }
+
+.nota { font: italic 14px/21px var(--serif); color: var(--tinta-suave); margin: 0; max-width: 46ch; }
+@media (prefers-reduced-motion: reduce) { .opcion { transition: none; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="antetitulo">Están invitados al</p>
+  <h1><span>Enlace</span> Riffo Rocha</h1>
+  <p class="bajada">Hay dos versiones de la invitación. Ábrelas y elige la que más te guste.</p>
+
+  <div class="opciones">
+    <a class="opcion" href="carta.html">
+      <span class="icono icono--sobre" aria-hidden="true"></span>
+      <span class="opcion__letra">Opción A</span>
+      <p class="opcion__nombre">Carta animada</p>
+      <p class="opcion__texto">Un sobre con lacre que se abre y deja salir once tarjetas de distintas formas para leer deslizando.</p>
+      <span class="opcion__ir">Abrir la carta</span>
+    </a>
+    <a class="opcion" href="invitacion.html">
+      <span class="icono icono--pagina" aria-hidden="true"></span>
+      <span class="opcion__letra">Opción B</span>
+      <p class="opcion__nombre">Invitación de scroll</p>
+      <p class="opcion__texto">Una sola página con nicho de mármol, blondas, relieves florales y marcos para fotos.</p>
+      <span class="opcion__ir">Ver la invitación</span>
+    </a>
+  </div>
+
+  <p class="nota">Borrador: la fecha, las direcciones, los nombres de los padres y los datos de regalos están por completar.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+French+Canon:ital@0;1&family=Monsieur+La+Doulaise&family=Special+Elite&display=swap');
+
+/* Mármol & Blonda — estilos de componentes. Todo color sale de tokens.css. Prefijo mb- */
+
+:root {
+  /* Lámina dorada (foil): se usa en lacre dorado, monogramas, números, filetes dobles */
+  --mb-foil: linear-gradient(115deg, var(--oro-profundo) 0%, var(--oro) 20%, var(--oro-claro) 40%, var(--oro) 56%, var(--oro-claro) 72%, var(--oro-profundo) 100%);
+  /* Vetas de mármol (rubor translúcido) + nubes suaves: funcionan sobre marfil y sobre vino */
+  --mb-vetas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='560'%3E%3Cfilter id='v' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.004 0.011' numOctaves='5' seed='17' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.62 0 0 0 0 0.36 0 0 0 0 0.38 -7 0 0 0 0.9'/%3E%3C/filter%3E%3Crect width='560' height='560' filter='url(%23v)' opacity='0.55'/%3E%3C/svg%3E");
+  --mb-nubes: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='560'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.85 0 0 0 0 0.62 0 0 0 0 0.62 0 0 0 0.9 -0.35'/%3E%3C/filter%3E%3Crect width='560' height='560' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+[class^="mb-"], [class*=" mb-"], [class^="mb-"]::before, [class*=" mb-"]::before, [class^="mb-"]::after, [class*=" mb-"]::after { box-sizing: border-box; }
+
+/* ---------- Escena (solo previews y secciones) ---------- */
+.mb-escena { box-sizing: border-box; min-height: 100%; padding: var(--espacio-4); background: var(--fondo); color: var(--tinta); font-family: var(--font-maquina); font-size: 16px; line-height: 28px; display: flex; flex-wrap: wrap; gap: var(--espacio-4); align-items: center; justify-content: center; }
+.mb-escena--banda { background: var(--banda); color: var(--en-banda); }
+.mb-escena--columna { flex-direction: column; flex-wrap: nowrap; }
+.mb-escena *, .mb-escena *::before, .mb-escena *::after { box-sizing: border-box; }
+
+/* ---------- Tipografía ---------- */
+.mb-lettering { font-family: var(--font-lettering); font-weight: 400; letter-spacing: 0; margin: 0; }
+.mb-monograma { font-family: var(--font-lettering); font-size: 112px; line-height: 1; }
+.mb-nombres { font-family: var(--font-lettering); font-size: clamp(56px, 15vw, 76px); line-height: 1.05; margin: 0; font-weight: 400; text-wrap: balance; }
+.mb-titulo { font-family: var(--font-lettering); font-size: 52px; line-height: 1.1; margin: 0; font-weight: 400; color: var(--acento); text-wrap: balance; }
+.mb-subtitulo { font-family: var(--font-lettering); font-size: 36px; line-height: 1.2; margin: 0; font-weight: 400; }
+.mb-firma { font-family: var(--font-lettering); font-size: 28px; line-height: 1.3; margin: 0; font-weight: 400; }
+.mb-eyebrow { font-family: var(--font-maquina); font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; margin: 0; }
+.mb-dato-grande { font-family: var(--font-maquina); font-size: 40px; line-height: 44px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.mb-dato { font-family: var(--font-maquina); font-size: 18px; line-height: 26px; font-weight: 700; font-variant-numeric: tabular-nums; margin: 0; }
+.mb-cuerpo { font-family: var(--font-maquina); font-size: 16px; line-height: 28px; margin: 0; max-width: 60ch; }
+.mb-cuerpo-sm { font-family: var(--font-maquina); font-size: 14px; line-height: 24px; margin: 0; }
+.mb-nota { font-family: var(--font-maquina); font-size: 12px; line-height: 18px; font-style: italic; margin: 0; }
+.mb-suave { color: var(--tinta-suave); }
+.mb-banda .mb-suave, .mb-escena--banda .mb-suave { color: var(--en-banda); opacity: .85; }
+
+/* Dorado */
+.mb-oro { color: var(--oro); }
+.mb-oro-texto { color: var(--oro-profundo); }
+.mb-foil { background: var(--mb-foil); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+.mb-filete-oro { border: 1px solid var(--oro); box-shadow: inset 0 0 0 3px transparent, inset 0 0 0 4px var(--oro); }
+
+/* Relieve ciego: letras del mismo color que el papel, levantadas por luz y sombra */
+.mb-relieve-texto { color: var(--fondo); text-shadow: -1px -1px 0 var(--luz-relieve), 1px 1px 1px var(--sombra-texto), 0 0 1px var(--sombra-texto); }
+
+/* ---------- Separador ---------- */
+.mb-separador { display: flex; align-items: center; gap: 12px; color: var(--oro); width: 100%; max-width: 240px; margin-inline: auto; }
+.mb-separador::before, .mb-separador::after { content: ""; flex: 1; height: 1px; background: currentColor; }
+.mb-separador svg { width: 16px; height: 16px; flex: none; fill: currentColor; }
+.mb-separador--doble::before, .mb-separador--doble::after { height: 4px; background: linear-gradient(currentColor 0 0) top / 100% 1px no-repeat, linear-gradient(currentColor 0 0) bottom / 100% 1px no-repeat; }
+
+/* ---------- Botón ---------- */
+.mb-boton { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 14px 28px; border: 1px solid var(--acento); border-radius: var(--radio-pildora); background: var(--acento); color: var(--en-acento); font: 700 13px/16px var(--font-maquina); letter-spacing: .2em; text-transform: uppercase; text-decoration: none; cursor: pointer; box-shadow: var(--sombra-relieve); transition: background-color .25s, color .25s, border-color .25s; }
+.mb-boton:hover { background: var(--acento-hover); border-color: var(--acento-hover); }
+.mb-boton:focus-visible { outline: 2px solid var(--foco); outline-offset: 3px; }
+.mb-boton--contorno { background: transparent; color: var(--acento); }
+.mb-boton--contorno:hover { background: var(--acento); border-color: var(--acento); color: var(--en-acento); }
+.mb-boton--oro { background: transparent; color: var(--tinta); border-color: var(--oro); box-shadow: inset 0 0 0 3px var(--fondo), inset 0 0 0 4px var(--oro); }
+.mb-boton--oro:hover { background: var(--oro); color: var(--fondo); border-color: var(--oro); }
+.mb-boton--en-banda { background: transparent; color: var(--en-banda); border-color: var(--oro); box-shadow: inset 0 0 0 3px var(--banda), inset 0 0 0 4px var(--oro); }
+.mb-boton--en-banda:hover { background: var(--en-banda); color: var(--banda); border-color: var(--en-banda); }
+.mb-boton--en-banda:focus-visible { outline-color: var(--en-banda); }
+.mb-boton svg { width: 14px; height: 14px; fill: currentColor; }
+
+/* ---------- Lacre ---------- */
+.mb-lacre { --t: 88px; position: relative; display: grid; place-items: center; width: var(--t); height: var(--t); padding: 0; border: 0; cursor: pointer; border-radius: 47% 53% 51% 49% / 52% 48% 52% 48%; background: radial-gradient(circle at 34% 28%, var(--oro-claro), var(--oro) 38%, var(--oro-profundo) 78%); box-shadow: var(--sombra-lacre); color: var(--oro-profundo); font-family: var(--font-lettering); font-size: calc(var(--t) * .34); line-height: 1; text-shadow: 0 1px 0 rgba(255, 240, 200, .55), 0 -1px 0 rgba(60, 35, 5, .35); transition: transform .3s, opacity .4s; }
+.mb-lacre::before { content: ""; position: absolute; inset: 13%; border-radius: 50%; box-shadow: inset 0 2px 3px rgba(60, 35, 5, .45), 0 1px 0 rgba(255, 240, 200, .45); }
+.mb-lacre::after { content: ""; position: absolute; inset: 19%; border-radius: 50%; border: 1px dotted rgba(60, 35, 5, .35); }
+.mb-lacre--vino { background: radial-gradient(circle at 34% 28%, var(--burdeos), var(--vino) 72%); color: var(--oro-claro); text-shadow: 0 -1px 0 rgba(30, 4, 10, .6), 0 1px 0 rgba(255, 220, 180, .25); }
+.mb-lacre--vino::before { box-shadow: inset 0 2px 3px rgba(30, 4, 10, .55), 0 1px 0 rgba(255, 200, 200, .2); }
+.mb-lacre--vino::after { border-color: var(--oro); opacity: .7; }
+.mb-lacre--grande { --t: 120px; }
+.mb-lacre:hover { transform: scale(1.04) rotate(-2deg); }
+.mb-lacre:focus-visible { outline: 2px solid var(--foco); outline-offset: 4px; }
+
+/* ---------- Sobre ---------- */
+.mb-sobre { position: relative; width: min(100%, 340px); aspect-ratio: 4 / 3; perspective: 1000px; margin-top: 150px; }
+.mb-sobre__dorso { position: absolute; inset: 0; background: var(--banda); box-shadow: var(--sombra-papel); }
+.mb-sobre__carta { position: absolute; left: 6%; right: 6%; top: 6%; bottom: 5%; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px; padding: 18px 12px; text-align: center; background: var(--superficie); color: var(--tinta); box-shadow: inset 0 0 0 6px var(--superficie), inset 0 0 0 7px var(--oro); transition: transform .9s cubic-bezier(.2, .7, .2, 1) .45s; }
+.mb-sobre__bolsillo { position: absolute; inset: 0; z-index: 2; background: var(--banda); clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%); }
+.mb-sobre__bolsillo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top right, transparent calc(50% - 1px), var(--oro) 50%, transparent calc(50% + 1px)) left bottom / 50% 100% no-repeat, linear-gradient(to top left, transparent calc(50% - 1px), var(--oro) 50%, transparent calc(50% + 1px)) right bottom / 50% 100% no-repeat; opacity: .55; }
+.mb-sobre__solapa { position: absolute; left: 0; right: 0; top: 0; height: 58%; z-index: 3; transform-origin: top; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.5, 0, .2, 1), z-index 0s .35s; }
+.mb-sobre__solapa::before, .mb-sobre__solapa::after { content: ""; position: absolute; inset: 0; clip-path: polygon(0 0, 100% 0, 50% 100%); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.mb-sobre__solapa::before { background: var(--acento); }
+.mb-sobre__solapa::after { background: var(--mb-vetas), var(--mb-nubes), var(--perla); transform: rotateX(180deg); }
+.mb-sobre > .mb-lacre { position: absolute; left: 50%; top: 58%; z-index: 4; translate: -50% -50%; }
+.mb-sobre.is-abierto .mb-sobre__solapa { transform: rotateX(180deg); z-index: 0; }
+.mb-sobre.is-abierto .mb-sobre__carta { transform: translateY(-52%); }
+.mb-sobre.is-abierto > .mb-lacre { opacity: 0; transform: scale(.6); pointer-events: none; }
+.mb-sobre__ayuda { position: absolute; left: 0; right: 0; bottom: -40px; text-align: center; color: var(--tinta-suave); }
+
+/* Sobre: papel verjurado, cantos dorados, encaje en la solapa, cinta de raso y carta de borde deshilachado */
+.mb-sobre__dorso, .mb-sobre__bolsillo { background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, .035) 0 1px, transparent 1px 4px), repeating-linear-gradient(0deg, rgba(0, 0, 0, .06) 0 1px, transparent 1px 3px); }
+.mb-sobre__dorso { box-shadow: inset 0 0 0 1px var(--oro), var(--sombra-papel); }
+.mb-sobre__bolsillo { box-shadow: inset 0 -1px 0 var(--oro), inset 1px 0 0 var(--oro), inset -1px 0 0 var(--oro); }
+.mb-sobre__solapa::before { background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, .04) 0 1px, transparent 1px 4px), repeating-linear-gradient(0deg, rgba(0, 0, 0, .05) 0 1px, transparent 1px 3px); }
+.mb-sobre__encaje { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; -webkit-backface-visibility: hidden; backface-visibility: hidden; filter: drop-shadow(0 1px 1px rgba(30, 4, 10, .55)); }
+.mb-sobre__encaje-papel { fill: var(--encaje); }
+.mb-sobre__encaje-filete { stroke: var(--oro); stroke-width: 1; stroke-dasharray: 1 2.5; stroke-linecap: round; }
+.mb-sobre__cinta { position: absolute; left: 0; right: 0; top: calc(58% - 8px); height: 16px; z-index: 3; background: linear-gradient(180deg, #d9a9a6 0%, var(--perla) 28%, #f0cfcc 50%, var(--rubor) 62%, var(--perla) 82%, #c9918f 100%); box-shadow: 0 2px 4px rgba(30, 4, 10, .4), inset 0 1px 0 rgba(255, 255, 255, .6); border-block: 1px solid var(--oro); transition: opacity .4s, transform .5s; transform-origin: center; }
+.mb-sobre.is-abierto .mb-sobre__cinta { opacity: 0; transform: scaleX(.2); }
+.mb-sobre__carta { -webkit-mask: radial-gradient(closest-side, #000 92%, #0000) 0 0 / 5px 5px round, linear-gradient(#000 0 0) 50% / calc(100% - 5px) calc(100% - 5px) no-repeat; mask: radial-gradient(closest-side, #000 92%, #0000) 0 0 / 5px 5px round, linear-gradient(#000 0 0) 50% / calc(100% - 5px) calc(100% - 5px) no-repeat; }
+.mb-sobre > .mb-lacre { z-index: 5; }
+
+/* ---------- Blonda (encaje calado) ---------- */
+.mb-blonda { position: relative; width: min(100%, 300px); aspect-ratio: 4 / 5; color: var(--encaje); filter: drop-shadow(0 1px 1px var(--sombra-texto)) drop-shadow(0 16px 22px var(--sombra-texto)); }
+.mb-blonda > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mb-blonda__texto { position: absolute; inset: 22% 24%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; color: var(--en-encaje); }
+
+/* ---------- Troquelado (borde festoneado) ---------- */
+.mb-troquel { --r: var(--troquel-feston); position: relative; width: min(100%, 320px); padding: calc(var(--r) * 3.4) calc(var(--r) * 2.8); text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--espacio-2); background: var(--superficie); color: var(--tinta);
+  -webkit-mask: radial-gradient(closest-side, #000 97%, #0000) 0 0 / calc(2 * var(--r)) calc(2 * var(--r)) round, linear-gradient(#000 0 0) 50% / calc(100% - 2 * var(--r)) calc(100% - 2 * var(--r)) no-repeat;
+          mask: radial-gradient(closest-side, #000 97%, #0000) 0 0 / calc(2 * var(--r)) calc(2 * var(--r)) round, linear-gradient(#000 0 0) 50% / calc(100% - 2 * var(--r)) calc(100% - 2 * var(--r)) no-repeat; }
+.mb-troquel::before { content: ""; position: absolute; inset: calc(var(--r) * 1.7); border: 1px solid var(--oro); pointer-events: none; }
+.mb-troquel::after { content: ""; position: absolute; inset: calc(var(--r) * 1.7 + 4px); border: 1px dotted var(--oro); pointer-events: none; }
+.mb-troquel > * { position: relative; }
+.mb-troquel--fino { --r: var(--troquel-fino); }
+.mb-troquel--banda { background: var(--banda); color: var(--en-banda); }
+.mb-troquel--banda .mb-titulo { color: var(--en-banda); }
+.mb-sombra-papel { filter: drop-shadow(0 1px 1px var(--sombra-texto)) drop-shadow(0 14px 20px var(--sombra-texto)); }
+
+/* ---------- Mármol ---------- */
+.mb-marmol { background-color: var(--fondo); background-image: var(--mb-vetas), var(--mb-nubes); background-size: 560px 560px, 560px 560px; }
+.mb-panel-marmol { position: relative; width: 100%; max-width: 420px; padding: var(--espacio-6) var(--espacio-5); display: flex; flex-direction: column; align-items: center; gap: var(--espacio-3); text-align: center; color: var(--tinta); box-shadow: inset 0 0 0 12px var(--fondo), inset 0 0 0 13px var(--oro), inset 0 0 0 17px var(--fondo), inset 0 0 0 18px var(--oro), var(--sombra-papel); }
+.mb-panel-marmol__monograma { font-family: var(--font-lettering); font-size: 112px; line-height: .9; }
+.mb-arco { border-radius: 999px 999px 0 0; overflow: hidden; aspect-ratio: 3 / 4; width: 60%; max-width: 100%; box-shadow: 0 0 0 4px var(--fondo), 0 0 0 5px var(--oro), var(--sombra-hundido); }
+.mb-ovalo { border-radius: var(--radio-ovalo); overflow: hidden; aspect-ratio: 3 / 4; box-shadow: 0 0 0 4px var(--fondo), 0 0 0 5px var(--oro); }
+.mb-arco__relleno { width: 100%; height: 100%; display: grid; place-items: center; background: var(--mb-vetas), var(--mb-nubes), var(--fondo-alterno); color: var(--tinta-suave); }
+
+/* ---------- Programa ---------- */
+.mb-programa { position: relative; list-style: none; margin: 0; padding: 0; width: 100%; max-width: 340px; }
+.mb-programa::before { content: ""; position: absolute; left: 92px; top: 18px; bottom: 18px; width: 1px; background: var(--oro); }
+.mb-programa li { position: relative; display: grid; grid-template-columns: 76px 1fr; column-gap: 33px; padding: 12px 0; align-items: baseline; }
+.mb-programa li::before { content: ""; position: absolute; left: 88px; top: 21px; width: 9px; height: 9px; rotate: 45deg; background: var(--mb-foil); box-shadow: 0 0 0 3px var(--fondo); }
+.mb-programa__hora { text-align: right; }
+.mb-programa__evento { font-family: var(--font-lettering); font-size: 28px; line-height: 1.2; color: var(--acento); margin: 0; }
+.mb-programa__lugar { grid-column: 2; }
+
+/* ---------- Cuenta regresiva ---------- */
+.mb-cuenta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; max-width: 360px; }
+.mb-cuenta__celda { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 14px 2px 10px; border-block: 1px solid var(--oro); position: relative; }
+.mb-cuenta__celda::after { content: ""; position: absolute; inset: 3px 0; border-block: 1px solid var(--oro); opacity: .5; pointer-events: none; }
+.mb-cuenta__numero { font: 700 40px/44px var(--font-maquina); font-variant-numeric: tabular-nums; }
+.mb-cuenta__unidad { font: 700 10px/14px var(--font-maquina); letter-spacing: .24em; text-transform: uppercase; color: var(--tinta-suave); }
+.mb-escena--banda .mb-cuenta__unidad { color: var(--en-banda); }
+
+/* ---------- Código de vestimenta ---------- */
+.mb-paleta { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.mb-paleta__muestra { display: flex; flex-direction: column; align-items: center; gap: 8px; font: 700 10px/14px var(--font-maquina); letter-spacing: .2em; text-transform: uppercase; color: var(--tinta-suave); }
+.mb-paleta__disco { width: 52px; height: 52px; border-radius: var(--radio-ovalo); box-shadow: 0 0 0 3px var(--fondo), 0 0 0 4px var(--oro), inset 2px 2px 3px rgba(255, 255, 255, .25), inset -2px -3px 4px rgba(0, 0, 0, .18); }
+
+/* ---------- Calendario ---------- */
+.mb-calendario { width: 100%; max-width: 300px; text-align: center; display: flex; flex-direction: column; gap: 10px; }
+.mb-calendario__grilla { display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 6px; font: 14px/36px var(--font-maquina); font-variant-numeric: tabular-nums; }
+.mb-calendario__dow { font-weight: 700; font-size: 11px; letter-spacing: .1em; color: var(--tinta-suave); line-height: 24px; border-bottom: 1px solid var(--oro); margin-bottom: 4px; }
+.mb-calendario__dia { width: 36px; height: 36px; margin: auto; display: grid; place-items: center; }
+.mb-calendario__dia.is-boda { border-radius: 50%; background: var(--acento); color: var(--en-acento); font-weight: 700; box-shadow: 0 0 0 3px var(--fondo), 0 0 0 4px var(--oro), 0 0 0 7px var(--fondo), 0 0 0 8px var(--oro); }
+
+/* ---------- Confirmación (RSVP) ---------- */
+.mb-form { display: flex; flex-direction: column; gap: var(--espacio-4); width: 100%; text-align: left; }
+.mb-campo { display: flex; flex-direction: column; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.mb-campo > label, .mb-campo > legend { font: 700 11px/16px var(--font-maquina); letter-spacing: .24em; text-transform: uppercase; color: var(--tinta-suave); padding: 0; margin-bottom: 6px; }
+.mb-input { width: 100%; border: 0; border-bottom: 1px solid var(--oro); border-radius: 0; background: transparent; color: var(--tinta); font: 16px/24px var(--font-maquina); padding: 8px 2px; }
+.mb-input::placeholder { color: var(--tinta-suave); opacity: .8; }
+.mb-input:focus-visible { outline: 2px solid var(--foco); outline-offset: 4px; border-bottom-color: var(--foco); }
+.mb-opciones { display: flex; flex-wrap: wrap; gap: 8px; }
+.mb-opcion { position: relative; }
+.mb-opcion input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.mb-opcion span { display: inline-flex; align-items: center; min-height: 40px; padding: 8px 16px; border: 1px solid var(--oro); border-radius: var(--radio-pildora); font: 700 12px/16px var(--font-maquina); letter-spacing: .14em; text-transform: uppercase; color: var(--tinta); cursor: pointer; transition: background-color .2s, color .2s; }
+.mb-opcion input:checked + span { background: var(--acento); border-color: var(--acento); color: var(--en-acento); }
+.mb-opcion input:focus-visible + span { outline: 2px solid var(--foco); outline-offset: 3px; }
+
+/* ================= Ornamentos old-world ================= */
+.mb-serif { font-family: var(--font-serif); font-weight: 400; margin: 0; }
+.mb-caps { font-family: var(--font-serif); font-weight: 400; text-transform: uppercase; letter-spacing: .16em; margin: 0; }
+.mb-italica { font-family: var(--font-serif); font-style: italic; font-size: 17px; line-height: 26px; margin: 0; }
+.mb-lacre--monograma { color: #3a2405; -webkit-text-stroke: .5px currentColor; font-size: calc(var(--t) * .3); text-shadow: 0 1px 0 rgba(255, 240, 200, .6), 0 -1px 0 rgba(60, 35, 5, .45); }
+
+/* Monograma entrelazado: la segunda letra baja y se monta sobre la primera */
+.mb-iniciales { position: relative; display: inline-flex; align-items: flex-start; font-family: var(--font-lettering); font-weight: 400; line-height: 1; white-space: nowrap; transform: translate(.04em, -.16em); }
+.mb-iniciales > span { display: inline-block; }
+.mb-iniciales > span + span { margin-left: -.5em; transform: translateY(.34em); }
+.mb-iniciales--foil > span { background: var(--mb-foil); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+.mb-lacre--monograma.mb-lacre--vino { color: var(--oro-claro); }
+
+/* Trazos a mano (los dibuja MarmolBlonda.iniciar) */
+.mb-trazo { fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; }
+.mb-trazo--fino { stroke-width: .7; }
+.mb-relleno { fill: currentColor; }
+
+/* Orlas de esquina */
+.mb-orlado { position: relative; }
+.mb-orla { position: absolute; width: 112px; height: 112px; color: var(--burdeos); pointer-events: none; overflow: visible; }
+.mb-orla--ti { top: 10px; left: 10px; }
+.mb-orla--td { top: 10px; right: 10px; transform: scaleX(-1); }
+.mb-orla--bi { bottom: 10px; left: 10px; transform: scaleY(-1); }
+.mb-orla--bd { bottom: 10px; right: 10px; transform: scale(-1, -1); }
+.mb-orla--oro, .mb-escena--banda .mb-orla, .mb-banda .mb-orla { color: var(--oro); }
+
+/* Floritura divisoria */
+.mb-floritura { display: block; width: 230px; max-width: 100%; height: 34px; color: var(--oro); overflow: visible; margin-inline: auto; }
+
+/* Guirnaldas laterales */
+.mb-con-guirnalda { position: relative; padding-left: 52px; padding-right: 52px; }
+.mb-guirnalda { position: absolute; top: 40px; bottom: 40px; width: 34px; height: calc(100% - 80px); color: var(--burdeos); pointer-events: none; overflow: visible; }
+.mb-guirnalda--i { left: 8px; }
+.mb-guirnalda--d { right: 8px; transform: scaleX(-1); }
+.mb-escena--banda .mb-guirnalda, .mb-guirnalda.mb-orla--oro { color: var(--oro); }
+
+/* Orilla de encaje entre secciones: --mb-encaje = color de la sección de arriba, --mb-hueco = color de la de abajo */
+.mb-encaje-orilla { position: relative; height: 26px; background: var(--mb-encaje, var(--perla));
+  -webkit-mask: linear-gradient(#000 0 0) top / 100% 14px no-repeat, radial-gradient(9px at 50% 14px, #000 97%, #0000) 0 0 / 18px 26px repeat-x;
+          mask: linear-gradient(#000 0 0) top / 100% 14px no-repeat, radial-gradient(9px at 50% 14px, #000 97%, #0000) 0 0 / 18px 26px repeat-x; }
+.mb-encaje-orilla::after { content: ""; position: absolute; left: 0; right: 0; top: 10px; height: 6px; background: radial-gradient(circle, var(--mb-hueco, var(--banda)) 1.6px, transparent 2px) 0 0 / 18px 6px repeat-x; }
+.mb-encaje-orilla--arriba { transform: scaleY(-1); }
+
+/* Relieve floral ciego (estampado en seco) */
+.mb-relieve-floral { position: relative; width: 100%; max-width: 380px; background: var(--papel-relieve); color: var(--en-encaje); box-shadow: 0 1px 2px rgba(74, 15, 28, .12), 0 18px 34px -18px rgba(74, 15, 28, .4); }
+.mb-relieve-floral > .mb-relieve { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mb-relieve-floral__contenido { position: relative; display: grid; gap: 14px; justify-items: center; text-align: center; padding: 70px 56px; }
+.mb-relieve { overflow: visible; pointer-events: none; }
+.mb-relieve .rv { fill: var(--papel-relieve); stroke: rgba(74, 15, 28, .16); stroke-width: .7; }
+.mb-relieve .rv-tallo { fill: none; stroke: var(--papel-relieve); stroke-width: 2.4; stroke-linecap: round; }
+.mb-relieve g.capa { filter: drop-shadow(-1px -1px 0 rgba(255, 255, 255, 1)) drop-shadow(1.2px 1.6px 1px rgba(74, 15, 28, .32)); }
+.mb-relieve--oscuro .rv { fill: var(--banda); stroke: rgba(0, 0, 0, .25); }
+.mb-relieve--oscuro .rv-tallo { stroke: var(--banda); }
+.mb-relieve--oscuro g.capa { filter: drop-shadow(-1px -1px 0 rgba(255, 190, 190, .22)) drop-shadow(1.2px 1.6px 1px rgba(0, 0, 0, .55)); }
+.mb-sobre__bolsillo > .mb-relieve { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Nicho de mármol con columnas */
+.mb-nicho { position: relative; width: min(100%, 330px); margin: 22px auto 0; padding: 0 34px; }
+.mb-nicho__clave { position: absolute; left: 50%; top: -14px; translate: -50% 0; z-index: 3; width: 44px; height: 46px; display: grid; place-items: center; clip-path: polygon(12% 0, 88% 0, 74% 100%, 26% 100%); background: var(--mb-vetas), linear-gradient(90deg, var(--marmol-sombra), var(--marmol-claro) 40%, #fff 55%, var(--marmol-sombra)); }
+.mb-nicho__clave svg { width: 22px; height: 22px; margin-top: 2px; color: var(--oro-profundo); }
+.mb-nicho__arco { position: relative; z-index: 1; border-radius: 999px 999px 0 0; padding: 14px 14px 0; background: var(--mb-vetas), var(--mb-nubes), linear-gradient(90deg, var(--marmol-sombra), var(--marmol-claro) 30%, #fffaf8 50%, var(--marmol-claro) 70%, var(--marmol-sombra)); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .95), 0 20px 34px -20px rgba(74, 15, 28, .5); }
+.mb-nicho__arco::before { content: ""; position: absolute; inset: 6px 6px 0; border-radius: 999px 999px 0 0; border: 1px solid var(--oro); border-bottom: 0; pointer-events: none; }
+.mb-nicho__interior { position: relative; border-radius: 999px 999px 0 0; aspect-ratio: 3 / 4; display: grid; place-items: center; overflow: hidden; background: radial-gradient(ellipse at 50% 30%, #fffaf8 0%, var(--marmol-sombra) 85%); box-shadow: inset 0 14px 26px rgba(74, 15, 28, .3), inset 0 -6px 12px rgba(74, 15, 28, .12); }
+.mb-columna { position: absolute; bottom: 30px; top: 42%; width: 26px; z-index: 2; background: repeating-linear-gradient(90deg, var(--marmol-claro) 0 3px, #fffaf8 3px 5px, var(--marmol-sombra) 5px 6px), var(--marmol-claro); box-shadow: 1px 0 0 rgba(74, 15, 28, .12), inset -3px 0 4px rgba(74, 15, 28, .12); }
+.mb-columna--i { left: 4px; } .mb-columna--d { right: 4px; }
+.mb-columna::before { content: ""; position: absolute; left: -7px; right: -7px; top: -16px; height: 16px; border-radius: 6px 6px 2px 2px; background: var(--mb-vetas), linear-gradient(#fffaf8, var(--marmol-sombra)); box-shadow: inset 0 -1px 0 var(--oro), inset 0 1px 0 #fff; }
+.mb-columna::after { content: ""; position: absolute; left: -6px; right: -6px; bottom: -10px; height: 10px; background: linear-gradient(var(--marmol-claro), var(--marmol-sombra)); box-shadow: inset 0 1px 0 #fff; }
+.mb-nicho__base { position: relative; z-index: 2; height: 30px; margin: 0 -10px; display: grid; place-items: center; background: var(--mb-vetas), linear-gradient(var(--marmol-claro), var(--marmol-sombra)); box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 rgba(74, 15, 28, .18), inset 0 6px 0 -5px var(--oro), 0 14px 22px -14px rgba(74, 15, 28, .5); }
+.mb-nicho__base span { font: 14px/1 var(--font-serif); letter-spacing: .3em; text-transform: uppercase; color: #9c7f78; text-shadow: 0 1px 0 #fff, 0 -1px 0 rgba(74, 15, 28, .25); }
+
+/* Medallón de mármol con monograma en lámina dorada */
+.mb-medallon { width: 128px; height: 128px; border-radius: 50%; display: grid; place-items: center; background: var(--mb-vetas), radial-gradient(circle at 35% 30%, #fffaf8, var(--marmol-claro) 55%, var(--marmol-sombra)); box-shadow: inset 0 0 0 6px var(--marmol-claro), inset 0 0 0 7px var(--oro), inset 0 0 0 11px var(--marmol-claro), inset 0 0 0 12px rgba(74, 15, 28, .15), 0 12px 20px -12px rgba(74, 15, 28, .5); }
+.mb-medallon > .mb-iniciales { font-size: 46px; filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .9)) drop-shadow(0 -1px 0 rgba(80, 50, 10, .35)); }
+
+/* Marcos para fotos */
+.mb-foto { position: relative; width: 100%; height: 100%; display: grid; place-items: center; align-content: center; gap: 8px; padding: 12px; text-align: center; background: var(--mb-vetas), var(--mb-nubes), var(--fondo-alterno); color: var(--tinta-suave); }
+.mb-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mb-foto__txt { font: italic 15px/20px var(--font-serif); }
+.mb-foto-ovalo { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 3px var(--encaje), 0 0 0 4px var(--oro); }
+.mb-marco-dorado { position: relative; width: 100%; padding: 16px; background: var(--mb-foil); box-shadow: inset 0 0 0 1px var(--oro-profundo), inset 2px 2px 0 rgba(255, 245, 215, .7), inset -2px -2px 0 rgba(80, 50, 10, .45), 0 16px 26px -16px rgba(74, 15, 28, .55); }
+.mb-marco-dorado::before { content: ""; position: absolute; inset: 7px; border: 1px solid rgba(80, 50, 10, .45); box-shadow: inset 0 0 0 1px rgba(255, 245, 215, .5); pointer-events: none; }
+.mb-marco-dorado__paspartu { padding: 10px; background: var(--perla); box-shadow: inset 1px 1px 3px rgba(74, 15, 28, .3); }
+.mb-marco-dorado__paspartu .mb-foto { aspect-ratio: 4 / 3; }
+.mb-marco-dorado .mb-orla { width: 58px; height: 58px; color: var(--oro-profundo); }
+.mb-marco-dorado .mb-orla--ti { top: -6px; left: -6px; } .mb-marco-dorado .mb-orla--td { top: -6px; right: -6px; }
+.mb-marco-dorado .mb-orla--bi { bottom: -6px; left: -6px; } .mb-marco-dorado .mb-orla--bd { bottom: -6px; right: -6px; }
+.mb-arco-foto { aspect-ratio: 3 / 4; border-radius: 999px 999px 0 0; overflow: hidden; padding: 8px 8px 0; background: var(--mb-vetas), linear-gradient(90deg, var(--marmol-sombra), var(--marmol-claro) 40%, #fffaf8 55%, var(--marmol-sombra)); box-shadow: 0 0 0 1px var(--oro), 0 14px 22px -14px rgba(74, 15, 28, .5); }
+.mb-arco-foto .mb-foto { border-radius: 999px 999px 0 0; box-shadow: inset 0 8px 16px rgba(74, 15, 28, .25); }
+.mb-camafeo { aspect-ratio: 3 / 4; border-radius: 50%; padding: 9px; background: var(--mb-foil); box-shadow: inset 0 0 0 1px var(--oro-profundo), 0 14px 22px -14px rgba(74, 15, 28, .5); }
+.mb-camafeo .mb-foto { border-radius: 50%; box-shadow: inset 0 0 0 4px var(--perla), inset 0 0 0 5px var(--oro); }
+.mb-pie-foto { font: italic 13px/18px var(--font-serif); color: var(--tinta-suave); margin-top: 8px; text-align: center; }
+
+/* Cita bíblica */
+.mb-cita { margin: 0; display: grid; gap: 10px; max-width: 32ch; text-align: center; }
+.mb-cita p { font: italic 23px/34px var(--font-serif); color: var(--tinta); margin: 0; text-wrap: balance; }
+.mb-cita cite { font: 13px/18px var(--font-serif); font-style: normal; letter-spacing: .26em; text-transform: uppercase; color: var(--oro-profundo); }
+.mb-cita--banda p { color: var(--en-banda); font-size: 26px; }
+.mb-cita--banda cite { color: var(--oro-claro); }
+
+/* Por completar */
+.mb-pendiente { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border: 1px dashed var(--oro); background: var(--perla); color: var(--burdeos); font: 11px/16px var(--font-maquina); letter-spacing: .08em; text-transform: uppercase; }
+.mb-pendiente::before { content: ""; width: 6px; height: 6px; rotate: 45deg; background: var(--oro); flex: none; }
+.mb-campo-pendiente { display: inline-block; min-width: 9ch; border-bottom: 1px dashed var(--oro); color: var(--tinta-suave); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mb-sobre__solapa, .mb-sobre__carta, .mb-lacre, .mb-boton, .mb-opcion span { transition: none; }
+}
