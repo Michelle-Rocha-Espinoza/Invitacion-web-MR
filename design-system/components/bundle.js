@@ -53,6 +53,32 @@
     return img;
   }
 
+  /* Pasa una imagen SVG a pixeles (WebP) en un momento libre: el navegador dibuja los SVG
+     en el hilo principal cada vez que aparecen al hacer scroll; un bitmap no cuesta nada. */
+  var colaBitmap = [], trabajando = false;
+  var enReposo = window.requestIdleCallback || function (f) { return setTimeout(function () { f({ timeRemaining: function () { return 12; } }); }, 60); };
+  function aBitmap(img) { colaBitmap.push({ img: img, intentos: 0 }); if (!trabajando) { trabajando = true; enReposo(procesarCola, { timeout: 1500 }); } }
+  function procesarCola(plazo) {
+    var vuelta = colaBitmap.length; // cada imagen se revisa una vez por turno libre
+    while (vuelta-- > 0 && colaBitmap.length && plazo.timeRemaining() > 6) {
+      var t = colaBitmap.shift(), img = t.img;
+      if (!img.isConnected || !img.complete || !img.clientWidth) {
+        if (++t.intentos < 40) colaBitmap.push(t);
+        continue;
+      }
+      try {
+        var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+        var w = Math.min(2048, Math.round(img.clientWidth * dpr)), h = Math.min(2048, Math.round(img.clientHeight * dpr));
+        var c = document.createElement('canvas'); c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        (function (destino) {
+          c.toBlob(function (b) { if (b) destino.src = URL.createObjectURL(b); }, 'image/webp', .9);
+        })(img);
+      } catch (e) { /* si el navegador no lo permite, queda como SVG */ }
+    }
+    if (colaBitmap.length) enReposo(procesarCola, { timeout: 1500 }); else trabajando = false;
+  }
+
   /* Igual que aImagen, para un SVG que ya está en la página: copia los estilos calculados (clases CSS) y lo reemplaza por la imagen. */
   var PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-linecap', 'stroke-linejoin', 'opacity', 'filter'];
   function aImagenEnSitio(svg, margen) {
@@ -66,9 +92,10 @@
     });
     var r = svg.getBoundingClientRect(), box = svg.getAttribute('viewBox');
     if (!box) return svg;
+    // tamaño de diseño (no el de pantalla), para que funcione también dentro de contenedores agrandados
+    var cs2 = getComputedStyle(svg), ancho = parseFloat(cs2.width) || r.width, alto = parseFloat(cs2.height) || r.height;
     var img = aImagen(svg.cloneNode(true), svg, margen);
-    var cs2 = getComputedStyle(svg);
-    if (!margen) img.style.cssText = 'width:' + r.width + 'px;height:' + r.height + 'px;';
+    if (!margen) img.style.cssText = 'width:' + ancho + 'px;height:' + alto + 'px;max-width:none;';
     ['data-mb'].forEach(function (a) { if (svg.getAttribute(a)) img.setAttribute('data-mb-hecho', svg.getAttribute(a)); });
     host.replaceChild(img, svg);
     return img;
@@ -483,7 +510,13 @@
     if (!escuchando) {
       escuchando = true;
       var espera;
-      window.addEventListener('resize', function () { clearTimeout(espera); espera = setTimeout(function () { medidos(document); }, 200); });
+      var anchoMedido = window.innerWidth;
+      window.addEventListener('resize', function () {
+        // en celulares la barra del navegador cambia el alto al hacer scroll: eso no requiere redibujar
+        if (window.innerWidth === anchoMedido) return;
+        anchoMedido = window.innerWidth;
+        clearTimeout(espera); espera = setTimeout(function () { medidos(document); }, 200);
+      });
     }
   }
 
